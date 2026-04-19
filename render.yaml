@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: f1news
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: PORT
+        value: "8080"
+      - key: VAPID_PUBLIC_KEY
+        sync: false   # set manually in Render dashboard
+      - key: VAPID_PRIVATE_KEY
+        sync: false   # set manually in Render dashboard
+      - key: VAPID_SUBJECT
+        value: "mailto:admin@f1news.app"
+      - key: NOTIFICATION_CRON
+        value: "0 0 9 * * *"
+      # To use PostgreSQL, add a Render Postgres service and set these:
+      # - key: DATABASE_URL
+      #   fromDatabase:
+      #     name: f1news-db
+      #     property: connectionString
+      # - key: DB_DRIVER
+      #   value: org.postgresql.Driver
+      # - key: JPA_DIALECT
+      #   value: org.hibernate.dialect.PostgreSQLDialect
+      # - key: H2_CONSOLE
+      #   value: "false"
